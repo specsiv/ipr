@@ -1,0 +1,10 @@
+<header class="header">
+  <mat-toolbar color="primary">
+    <span class="title">ИПР</span>
+    {{url$ | async}}
+  </mat-toolbar>
+</header>
+
+<main class="main">
+  <router-outlet></router-outlet>
+</main>

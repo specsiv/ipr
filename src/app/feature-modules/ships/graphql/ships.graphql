@@ -1,0 +1,13 @@
+query ships($limit: Int, $offset: Int, $searchText: String) {
+  shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }) {
+    data {
+      id
+      name
+      image
+      year_built
+    }
+    result {
+      totalCount
+    }
+  }
+}

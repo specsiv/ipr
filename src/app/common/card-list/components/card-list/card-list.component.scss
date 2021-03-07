@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+}
+
+.search {
+  width: 520px;
+}
+
+.previews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 415px);
+  grid-gap: 15px;
+  justify-content: center;
+
+  height: 100%;
+  overflow-y: auto;
+  margin: 15px;
+}

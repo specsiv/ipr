@@ -1,0 +1,7 @@
+<app-card-list
+  [list$]="ships$"
+  [pageSize]="variables.limit"
+  [pageIndex]="pageIndex"
+  (page)="page($event)"
+  (search)="search($event)">
+</app-card-list>

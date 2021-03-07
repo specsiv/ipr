@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header style="display: flex; align-content: center;">
+    <div mat-card-avatar>
+      <mat-icon aria-hidden="false" [attr.aria-label]="'Иконка корабля ' + data.name" inline="true" svgIcon="ship"></mat-icon>
+    </div>
+    <mat-card-title>{{data.name}}</mat-card-title>
+    <mat-card-subtitle>Тип: корабль</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image class="image" [src]="data.image" [alt]="'Изображение корабля ' + data.name">
+  <mat-card-content class="content">
+    <p *ngIf="data.year">
+      Год выпуска: {{data.year}}
+    </p>
+  </mat-card-content>
+</mat-card>
