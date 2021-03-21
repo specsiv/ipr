@@ -5,10 +5,11 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Exact, ShipsGQL, ShipsQuery } from 'src/app/api/graphql';
 import { Card, CardList } from 'src/app/common/card-list/models/card';
 import { ShipCardPreviewComponent } from 'src/app/shared/card-previews/components/ship-card-preview/ship-card-preview.component';
-import { ShipSettings } from '../models/ships';
+import { ShipSettings } from '../models/ship-settings';
+import { ShipsAPI } from '../models/ships-api';
 
 @Injectable()
-export class ShipsService implements OnDestroy {
+export class ShipsGraphQLAPIService implements ShipsAPI, OnDestroy {
   private destroy$ = new ReplaySubject<void>(1);
 
   private shipsQuery: QueryRef<ShipsQuery, Exact<any>>;
@@ -20,16 +21,14 @@ export class ShipsService implements OnDestroy {
     index: 0,
     searchText: '',
   };
-  private settingsSubject$ = new BehaviorSubject<Readonly<ShipSettings>>(
-    this.currentSettings
-  );
+  private settingsSubject$ = new BehaviorSubject<Readonly<ShipSettings>>(this.currentSettings);
   private _settings$ = this.settingsSubject$.asObservable();
 
-  get settings$() {
+  get settings$(): Observable<Readonly<ShipSettings>> {
     return this._settings$;
   }
 
-  get ships$() {
+  get ships$(): Observable<CardList> {
     return this._ships$;
   }
 
@@ -39,11 +38,7 @@ export class ShipsService implements OnDestroy {
     this._ships$ = this.shipsQuery.valueChanges.pipe(
       map(
         ({ data }): CardList => {
-          if (
-            data?.shipsResult &&
-            data.shipsResult.data &&
-            data.shipsResult.result
-          ) {
+          if (data?.shipsResult && data.shipsResult.data && data.shipsResult.result?.totalCount) {
             return {
               list: data.shipsResult.data.map(
                 (ship): Card => {
@@ -57,7 +52,7 @@ export class ShipsService implements OnDestroy {
                   };
                 }
               ),
-              length: data.shipsResult.result.totalCount!,
+              length: data.shipsResult.result.totalCount,
             };
           }
 
@@ -76,14 +71,14 @@ export class ShipsService implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.settingsSubject$.complete();
 
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  page(pageIndex: number, pageSize: number) {
+  page(pageIndex: number, pageSize: number): void {
     this.settingsSubject$.next({
       ...this.currentSettings,
       limit: pageSize,
@@ -92,7 +87,7 @@ export class ShipsService implements OnDestroy {
     });
   }
 
-  search(text: string) {
+  search(text: string): void {
     this.settingsSubject$.next({
       ...this.currentSettings,
       searchText: text,

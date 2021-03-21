@@ -11,11 +11,11 @@
 
 .previews-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 415px);
   grid-gap: 15px;
-  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 415px);
 
   height: 100%;
-  overflow-y: auto;
+  justify-content: center;
   margin: 15px;
+  overflow-y: auto;
 }

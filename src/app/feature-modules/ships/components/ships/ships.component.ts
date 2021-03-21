@@ -1,38 +1,51 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CardList } from 'src/app/common/card-list/models/card';
-import { ShipSettings } from '../../models/ships';
-import { ShipsService } from '../../services/ships.service';
+import { ShipSettings } from '../../models/ship-settings';
+import { ShipsAPI, SHIPS_API } from '../../models/ships-api';
+import { ShipsGraphQLAPIService } from '../../services/ships-graphql-api.service';
 
 @Component({
   selector: 'app-ships',
   templateUrl: './ships.component.html',
   styleUrls: ['./ships.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: SHIPS_API,
+      useClass: ShipsGraphQLAPIService,
+    },
+  ],
 })
 export class ShipsComponent {
   private destroy$ = new ReplaySubject<void>(1);
 
-  settings!: Readonly<ShipSettings>;
-  ships$: Observable<CardList>;
+  private _settings!: Readonly<ShipSettings>;
+  private _ships$: Observable<CardList>;
 
-  constructor(private shipsService: ShipsService) {
-    this.ships$ = shipsService.ships$;
+  get ships$(): Observable<CardList> {
+    return this._ships$;
+  }
 
-    shipsService.settings$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((settings) => {
-        this.settings = settings;
-      });
+  get settings(): Readonly<ShipSettings> {
+    return this._settings;
+  }
+
+  constructor(@Inject(SHIPS_API) private shipsAPI: ShipsAPI) {
+    this._ships$ = shipsAPI.ships$;
+
+    shipsAPI.settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
+      this._settings = settings;
+    });
   }
 
   page(event: PageEvent) {
-    this.shipsService.page(event.pageIndex, event.pageSize);
+    this.shipsAPI.page(event.pageIndex, event.pageSize);
   }
 
-  search(text: string) {
-    this.shipsService.search(text);
+  search(text: string): void {
+    this.shipsAPI.search(text);
   }
 }

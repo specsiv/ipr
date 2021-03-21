@@ -9,6 +9,6 @@ export class MatPaginatorLocal extends MatPaginatorIntl {
     super();
   }
 
-  getRangeLabel = (page: number, pageSize: number, length: number) =>
+  getRangeLabel = (page: number, pageSize: number, length: number): string =>
     `${page + 1} из ${Math.trunc(length / pageSize) + 1}`;
 }

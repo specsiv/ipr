@@ -40,23 +40,24 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
 
   private _pageSize = 5;
   private pageOptions = [5, 15, 25];
+  private _length = 0;
   private destroy$ = new ReplaySubject<void>(1);
 
-  get pageSize() {
+  get pageSize(): number {
     return this._pageSize;
   }
 
+  get length(): number {
+    return this._length;
+  }
+
   searchText = '';
-  length = 0;
 
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private cdr: ChangeDetectorRef) {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.list$.pipe(takeUntil(this.destroy$)).subscribe((cardList) => {
-      this.length = cardList.length;
+      this._length = cardList.length;
 
       this.previewsView.clear();
 
@@ -72,12 +73,12 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  erase() {
+  erase(): void {
     this.searchText = '';
 
     this.search.emit(this.searchText);

@@ -4,11 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "graphql-codegen": "graphql-codegen --config codegen.yml"
+    "graphql-codegen": "graphql-codegen --config codegen.yml",
+    "prettier": "prettier --write src/**/*.{js,ts,css,scss,html}",
+    "stylelint": "stylelint src/**/*.{css,scss}",
+    "stylelint-fix": "stylelint --fix src/**/*.{css,scss}"
   },
   "private": true,
   "dependencies": {
@@ -34,9 +37,13 @@
     "@angular/cli": "~11.0.6",
     "@angular/compiler-cli": "~11.0.6",
     "@graphql-codegen/cli": "1.20.0",
+    "@graphql-codegen/typescript": "1.20.0",
+    "@graphql-codegen/typescript-apollo-angular": "2.2.1",
+    "@graphql-codegen/typescript-operations": "1.17.13",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "husky": "^4.3.8",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.1.0",
@@ -44,12 +51,32 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "2.2.1",
     "protractor": "~7.0.0",
+    "stylelint": "^13.12.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-prettier": "^1.2.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2",
-    "@graphql-codegen/typescript": "1.20.0",
-    "@graphql-codegen/typescript-apollo-angular": "2.2.1",
-    "@graphql-codegen/typescript-operations": "1.17.13"
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
+    "typescript": "~4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,css,scss,md,html}": "prettier --write",
+    "src/**/*.css,scss": [
+      "stylelint --fix",
+      "stylelint"
+    ],
+    "src/**/*.ts": [
+      "npm run lint"
+    ]
   }
 }

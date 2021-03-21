@@ -2,7 +2,9 @@ import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -17,8 +19,6 @@ export type Scalars = {
   Date: any;
   ObjectID: any;
 };
-
-
 
 export type Query = {
   __typename?: 'Query';
@@ -67,7 +67,6 @@ export type Query = {
   ship?: Maybe<Ship>;
 };
 
-
 export type QueryUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -75,7 +74,6 @@ export type QueryUsersArgs = {
   order_by?: Maybe<Array<Users_Order_By>>;
   where?: Maybe<Users_Bool_Exp>;
 };
-
 
 export type QueryUsers_AggregateArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
@@ -85,11 +83,9 @@ export type QueryUsers_AggregateArgs = {
   where?: Maybe<Users_Bool_Exp>;
 };
 
-
 export type QueryUsers_By_PkArgs = {
   id: Scalars['uuid'];
 };
-
 
 export type QueryCapsulesArgs = {
   find?: Maybe<CapsulesFind>;
@@ -99,7 +95,6 @@ export type QueryCapsulesArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryCapsulesPastArgs = {
   find?: Maybe<CapsulesFind>;
   limit?: Maybe<Scalars['Int']>;
@@ -107,7 +102,6 @@ export type QueryCapsulesPastArgs = {
   order?: Maybe<Scalars['String']>;
   sort?: Maybe<Scalars['String']>;
 };
-
 
 export type QueryCapsulesUpcomingArgs = {
   find?: Maybe<CapsulesFind>;
@@ -117,11 +111,9 @@ export type QueryCapsulesUpcomingArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryCapsuleArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryCoresArgs = {
   find?: Maybe<CoresFind>;
@@ -131,7 +123,6 @@ export type QueryCoresArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryCoresPastArgs = {
   find?: Maybe<CoresFind>;
   limit?: Maybe<Scalars['Int']>;
@@ -139,7 +130,6 @@ export type QueryCoresPastArgs = {
   order?: Maybe<Scalars['String']>;
   sort?: Maybe<Scalars['String']>;
 };
-
 
 export type QueryCoresUpcomingArgs = {
   find?: Maybe<CoresFind>;
@@ -149,22 +139,18 @@ export type QueryCoresUpcomingArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryCoreArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryDragonsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryDragonArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryHistoriesArgs = {
   find?: Maybe<HistoryFind>;
@@ -174,7 +160,6 @@ export type QueryHistoriesArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryHistoriesResultArgs = {
   find?: Maybe<HistoryFind>;
   limit?: Maybe<Scalars['Int']>;
@@ -183,22 +168,18 @@ export type QueryHistoriesResultArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryHistoryArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryLandpadsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryLandpadArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryLaunchesArgs = {
   find?: Maybe<LaunchFind>;
@@ -208,7 +189,6 @@ export type QueryLaunchesArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryLaunchesPastArgs = {
   find?: Maybe<LaunchFind>;
   limit?: Maybe<Scalars['Int']>;
@@ -216,7 +196,6 @@ export type QueryLaunchesPastArgs = {
   order?: Maybe<Scalars['String']>;
   sort?: Maybe<Scalars['String']>;
 };
-
 
 export type QueryLaunchesPastResultArgs = {
   find?: Maybe<LaunchFind>;
@@ -226,7 +205,6 @@ export type QueryLaunchesPastResultArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryLaunchesUpcomingArgs = {
   find?: Maybe<LaunchFind>;
   limit?: Maybe<Scalars['Int']>;
@@ -235,32 +213,26 @@ export type QueryLaunchesUpcomingArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryLaunchArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryLaunchLatestArgs = {
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryLaunchNextArgs = {
   offset?: Maybe<Scalars['Int']>;
 };
-
 
 export type QueryLaunchpadsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryLaunchpadArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryMissionsArgs = {
   find?: Maybe<MissionsFind>;
@@ -268,18 +240,15 @@ export type QueryMissionsArgs = {
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryMissionsResultArgs = {
   find?: Maybe<MissionsFind>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryMissionArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryPayloadsArgs = {
   find?: Maybe<PayloadsFind>;
@@ -289,28 +258,23 @@ export type QueryPayloadsArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryPayloadArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryRocketsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryRocketsResultArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryRocketArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryShipsArgs = {
   find?: Maybe<ShipsFind>;
@@ -320,7 +284,6 @@ export type QueryShipsArgs = {
   sort?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryShipsResultArgs = {
   find?: Maybe<ShipsFind>;
   limit?: Maybe<Scalars['Int']>;
@@ -328,7 +291,6 @@ export type QueryShipsResultArgs = {
   order?: Maybe<Scalars['String']>;
   sort?: Maybe<Scalars['String']>;
 };
-
 
 export type QueryShipArgs = {
   id: Scalars['ID'];
@@ -345,7 +307,7 @@ export enum Users_Select_Column {
   /** column name */
   Timestamp = 'timestamp',
   /** column name */
-  Twitter = 'twitter'
+  Twitter = 'twitter',
 }
 
 /** ordering options when selecting data from "users" */
@@ -370,7 +332,7 @@ export enum Order_By {
   /** in the descending order, nulls first */
   DescNullsFirst = 'desc_nulls_first',
   /** in the descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last'
+  DescNullsLast = 'desc_nulls_last',
 }
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
@@ -397,7 +359,6 @@ export type Uuid_Comparison_Exp = {
   _neq?: Maybe<Scalars['uuid']>;
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
-
 
 /** expression to compare columns of type String. All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
@@ -431,7 +392,6 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
 
-
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'users';
@@ -456,7 +416,6 @@ export type Users_Aggregate_Fields = {
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
 };
-
 
 /** aggregate fields of "users" */
 export type Users_Aggregate_FieldsCountArgs = {
@@ -491,7 +450,6 @@ export type CapsulesFind = {
   status?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
-
 
 export type Capsule = {
   __typename?: 'Capsule';
@@ -1172,17 +1130,14 @@ export type Mutation = {
   update_users?: Maybe<Users_Mutation_Response>;
 };
 
-
 export type MutationDelete_UsersArgs = {
   where: Users_Bool_Exp;
 };
-
 
 export type MutationInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: Maybe<Users_On_Conflict>;
 };
-
 
 export type MutationUpdate_UsersArgs = {
   _set?: Maybe<Users_Set_Input>;
@@ -1216,7 +1171,7 @@ export type Users_On_Conflict = {
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
   /** unique or primary key constraint */
-  UsersPkey = 'users_pkey'
+  UsersPkey = 'users_pkey',
 }
 
 /** update columns of table "users" */
@@ -1230,7 +1185,7 @@ export enum Users_Update_Column {
   /** column name */
   Timestamp = 'timestamp',
   /** column name */
-  Twitter = 'twitter'
+  Twitter = 'twitter',
 }
 
 /** input type for updating data in table "users" */
@@ -1252,7 +1207,6 @@ export type Subscription = {
   users_by_pk?: Maybe<Users>;
 };
 
-
 export type SubscriptionUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1261,7 +1215,6 @@ export type SubscriptionUsersArgs = {
   where?: Maybe<Users_Bool_Exp>;
 };
 
-
 export type SubscriptionUsers_AggregateArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1269,7 +1222,6 @@ export type SubscriptionUsers_AggregateArgs = {
   order_by?: Maybe<Array<Users_Order_By>>;
   where?: Maybe<Users_Bool_Exp>;
 };
-
 
 export type SubscriptionUsers_By_PkArgs = {
   id: Scalars['uuid'];
@@ -1280,7 +1232,7 @@ export enum Conflict_Action {
   /** ignore the insert on this row */
   Ignore = 'ignore',
   /** update the row with the given values */
-  Update = 'update'
+  Update = 'update',
 }
 
 /** order by aggregate values of table "users" */
@@ -1318,7 +1270,6 @@ export type Users_Obj_Rel_Insert_Input = {
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
-
 export type CoreMission = {
   __typename?: 'CoreMission';
   name?: Maybe<Scalars['String']>;
@@ -1331,44 +1282,38 @@ export type ShipsQueryVariables = Exact<{
   searchText?: Maybe<Scalars['String']>;
 }>;
 
-
-export type ShipsQuery = (
-  { __typename?: 'Query' }
-  & { shipsResult?: Maybe<(
-    { __typename?: 'ShipsResult' }
-    & { data?: Maybe<Array<Maybe<(
-      { __typename?: 'Ship' }
-      & Pick<Ship, 'id' | 'name' | 'image' | 'year_built'>
-    )>>>, result?: Maybe<(
-      { __typename?: 'Result' }
-      & Pick<Result, 'totalCount'>
-    )> }
-  )> }
-);
+export type ShipsQuery = { __typename?: 'Query' } & {
+  shipsResult?: Maybe<
+    { __typename?: 'ShipsResult' } & {
+      data?: Maybe<Array<Maybe<{ __typename?: 'Ship' } & Pick<Ship, 'id' | 'name' | 'image' | 'year_built'>>>>;
+      result?: Maybe<{ __typename?: 'Result' } & Pick<Result, 'totalCount'>>;
+    }
+  >;
+};
 
 export const ShipsDocument = gql`
-    query ships($limit: Int, $offset: Int, $searchText: String) {
-  shipsResult(limit: $limit, offset: $offset, find: {name: $searchText}) {
-    data {
-      id
-      name
-      image
-      year_built
+  query ships($limit: Int, $offset: Int, $searchText: String) {
+    shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }) {
+      data {
+        id
+        name
+        image
+        year_built
+      }
+      result {
+        totalCount
+      }
     }
-    result {
-      totalCount
-    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ShipsGQL extends Apollo.Query<ShipsQuery, ShipsQueryVariables> {
+  document = ShipsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ShipsGQL extends Apollo.Query<ShipsQuery, ShipsQueryVariables> {
-    document = ShipsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }

@@ -1,7 +1,7 @@
 <mat-toolbar [color]="'primary'">
   <mat-form-field class="search">
     <mat-label>Поиск</mat-label>
-    <input type="text" matInput [(ngModel)]="searchText" (change)="search.emit(searchText)">
+    <input type="text" matInput [(ngModel)]="searchText" (change)="search.emit(searchText)" />
     <button *ngIf="searchText" aria-label="Очистить" mat-button matSuffix mat-icon-button (click)="erase()">
       <mat-icon>close</mat-icon>
     </button>
@@ -16,5 +16,6 @@
   [pageSize]="pageSize"
   [pageIndex]="pageIndex"
   [length]="length"
-  (page)="page.emit($event)">
+  (page)="page.emit($event)"
+>
 </mat-paginator>

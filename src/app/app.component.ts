@@ -16,9 +16,7 @@ export class AppComponent {
 
   constructor(router: Router) {
     this._url$ = router.events.pipe(
-      filter(
-        (event: Event): event is NavigationEnd => event instanceof NavigationEnd
-      ),
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
       map((event) => event.urlAfterRedirects)
     );
   }

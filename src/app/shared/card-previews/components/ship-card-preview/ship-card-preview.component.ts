@@ -15,9 +15,6 @@ export class ShipCardPreviewComponent implements CardPreviewComponent {
   @Input() data!: CardPreviewData;
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIconLiteral(
-      'ship',
-      sanitizer.bypassSecurityTrustHtml(SHIP)
-    );
+    iconRegistry.addSvgIconLiteral('ship', sanitizer.bypassSecurityTrustHtml(SHIP));
   }
 }
