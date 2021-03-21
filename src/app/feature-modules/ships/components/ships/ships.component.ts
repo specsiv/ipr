@@ -41,7 +41,7 @@ export class ShipsComponent {
     });
   }
 
-  page(event: PageEvent) {
+  page(event: PageEvent): void {
     this.shipsAPI.page(event.pageIndex, event.pageSize);
   }
 

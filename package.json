@@ -1,6 +1,6 @@
 {
   "name": "ipr",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "graphql-codegen": "graphql-codegen --config codegen.yml",
-    "prettier": "prettier --write src/**/*.{js,ts,css,scss,html}",
+    "prettier": "prettier --write {e2e,src}/**/*.{js,ts,css,scss,html}",
     "stylelint": "stylelint src/**/*.{css,scss}",
     "stylelint-fix": "stylelint --fix src/**/*.{css,scss}"
   },
@@ -70,13 +70,10 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,ts,css,scss,md,html}": "prettier --write",
-    "src/**/*.css,scss": [
+    "{e2e,src}/**/*.{js,ts,css,scss,md,html}": "prettier --write",
+    "src/*.{css,scss}": [
       "stylelint --fix",
       "stylelint"
-    ],
-    "src/**/*.ts": [
-      "npm run lint"
     ]
   }
 }
