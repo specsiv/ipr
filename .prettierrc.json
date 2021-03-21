@@ -3,7 +3,7 @@
   "tabWidth": 2,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "endOfLine": "lf",
+  "endOfLine": "crlf",
   "semi": true,
   "singleQuote": true,
   "quoteProps": "consistent",

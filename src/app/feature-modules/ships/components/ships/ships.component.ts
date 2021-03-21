@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Observable, ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { CardList } from 'src/app/common/card-list/models/card';
 import { ShipSettings } from '../../models/ship-settings';
 import { ShipsAPI, SHIPS_API } from '../../models/ships-api';
@@ -19,11 +19,13 @@ import { ShipsGraphQLAPIService } from '../../services/ships-graphql-api.service
     },
   ],
 })
-export class ShipsComponent {
+export class ShipsComponent implements OnDestroy {
+  private searchSubject$ = new Subject<string>();
   private destroy$ = new ReplaySubject<void>(1);
 
   private _settings!: Readonly<ShipSettings>;
   private _ships$: Observable<CardList>;
+  private search$ = this.searchSubject$.pipe(debounceTime(300), distinctUntilChanged());
 
   get ships$(): Observable<CardList> {
     return this._ships$;
@@ -39,6 +41,17 @@ export class ShipsComponent {
     shipsAPI.settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
       this._settings = settings;
     });
+
+    this.search$.pipe(takeUntil(this.destroy$)).subscribe((text) => {
+      this.shipsAPI.search(text);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubject$.complete();
+
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   page(event: PageEvent): void {
@@ -46,6 +59,6 @@ export class ShipsComponent {
   }
 
   search(text: string): void {
-    this.shipsAPI.search(text);
+    this.searchSubject$.next(text);
   }
 }

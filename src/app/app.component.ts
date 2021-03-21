@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   private _url$: Observable<string>;
 
-  public get url$(): Observable<string> {
+  get url$(): Observable<string> {
     return this._url$;
   }
 

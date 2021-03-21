@@ -1,6 +1,6 @@
 {
   "name": "ipr",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -71,7 +71,6 @@
   },
   "lint-staged": {
     "{e2e,src}/**/*.{js,ts,css,scss,md,html}": "prettier --write",
-    "{e2e,src}/**/*.{js,ts}": "npm run lint",
     "src/*.{css,scss}": [
       "stylelint --fix",
       "stylelint"
