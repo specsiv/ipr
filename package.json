@@ -71,6 +71,7 @@
   },
   "lint-staged": {
     "{e2e,src}/**/*.{js,ts,css,scss,md,html}": "prettier --write",
+    "{e2e,src}/**/*.{js,ts}": "npm run lint",
     "src/*.{css,scss}": [
       "stylelint --fix",
       "stylelint"
