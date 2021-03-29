@@ -31,6 +31,7 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
     this._pageSize = currentOption ?? this.pageOptions[0];
   }
   @Input() pageIndex = 0;
+  @Input() searchText = '';
 
   @Output() page = new EventEmitter<PageEvent>();
   @Output() search = new EventEmitter<string>();
@@ -50,8 +51,6 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   get length(): number {
     return this._length;
   }
-
-  searchText = '';
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private cdr: ChangeDetectorRef) {}
 

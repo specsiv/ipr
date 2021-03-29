@@ -1,4 +1,4 @@
-export interface ShipSettings {
+export interface ListSettings {
   limit: number;
   offset: number;
   index: number;
