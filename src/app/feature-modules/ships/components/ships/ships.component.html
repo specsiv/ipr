@@ -3,7 +3,9 @@
   [pageSize]="settings.limit"
   [pageIndex]="settings.index"
   [searchText]="settings.searchText"
+  [sortType]="settings.order | sortType"
   (page)="page($event)"
   (search)="search($event)"
+  (sort)="sort($event)"
 >
 </app-card-list>

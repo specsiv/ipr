@@ -2,9 +2,7 @@ import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -1280,6 +1278,7 @@ export type ShipsQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
   searchText?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['String']>;
 }>;
 
 export type ShipsQuery = { __typename?: 'Query' } & {
@@ -1292,8 +1291,8 @@ export type ShipsQuery = { __typename?: 'Query' } & {
 };
 
 export const ShipsDocument = gql`
-  query ships($limit: Int, $offset: Int, $searchText: String) {
-    shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }) {
+  query ships($limit: Int, $offset: Int, $searchText: String, $order: String) {
+    shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }, sort: "name", order: $order) {
       data {
         id
         name

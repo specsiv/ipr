@@ -16,6 +16,7 @@ import { CardList } from '../../models/card';
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
+import { SortType } from '../../models/list-settings';
 
 @Component({
   selector: 'app-card-list',
@@ -32,9 +33,11 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   }
   @Input() pageIndex = 0;
   @Input() searchText = '';
+  @Input() sortType = SortType.ASC;
 
   @Output() page = new EventEmitter<PageEvent>();
   @Output() search = new EventEmitter<string>();
+  @Output() sort = new EventEmitter<SortType>();
 
   @ViewChild('previews', { read: ViewContainerRef })
   previewsView!: ViewContainerRef;

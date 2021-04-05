@@ -1,5 +1,5 @@
-query ships($limit: Int, $offset: Int, $searchText: String) {
-  shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }) {
+query ships($limit: Int, $offset: Int, $searchText: String, $order: String) {
+  shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }, sort: "name", order: $order) {
     data {
       id
       name

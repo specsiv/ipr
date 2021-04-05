@@ -1,6 +1,6 @@
 import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ListSettings } from '../models/list-settings';
+import { ListSettings, SortType } from '../models/list-settings';
 
 export abstract class CardListService {
   private isStarted = false;
@@ -11,6 +11,7 @@ export abstract class CardListService {
     offset: 0,
     index: 0,
     searchText: '',
+    order: 'ASC',
   };
   private settingsSubject$ = new BehaviorSubject<Readonly<ListSettings>>({ ...this.currentSettings });
   private _settings$ = this.settingsSubject$.asObservable();
@@ -61,6 +62,12 @@ export abstract class CardListService {
     this.settingsSubject$.next({
       ...this.currentSettings,
       ...settings,
+    });
+  }
+
+  sort(type: SortType): void {
+    this.load({
+      order: type ? 'DESC' : 'ASC',
     });
   }
 }

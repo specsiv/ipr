@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { CardList } from 'src/app/common/card-list/models/card';
-import { ListSettings } from 'src/app/common/card-list/models/list-settings';
+import { ListSettings, SortType } from 'src/app/common/card-list/models/list-settings';
 import { ShipsAPI, SHIPS_API } from '../../models/ships-api';
 import { ShipsGraphQLAPIService } from '../../services/ships-graphql-api.service';
 
@@ -84,6 +84,10 @@ export class ShipsComponent implements OnDestroy {
       querySettings.searchText = queryParams.searchText;
     }
 
+    if (queryParams.hasOwnProperty('order')) {
+      querySettings.order = queryParams.order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    }
+
     return querySettings;
   }
 
@@ -108,5 +112,9 @@ export class ShipsComponent implements OnDestroy {
 
   search(text: string): void {
     this.searchSubject$.next(text);
+  }
+
+  sort(type: SortType): void {
+    this.shipsAPI.sort(type);
   }
 }

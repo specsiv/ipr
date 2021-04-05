@@ -9,6 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SortButtonComponent } from './components/sort-button/sort-button.component';
+import { SortIconPipe } from './pipes/sort-icon.pipe';
+import { SortTypePipe } from './pipes/sort-type.pipe';
 
 @NgModule({
   imports: [
@@ -21,8 +24,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     MatIconModule,
   ],
-  exports: [CardListComponent],
-  declarations: [CardListComponent],
+  exports: [CardListComponent, SortTypePipe],
+  declarations: [CardListComponent, SortButtonComponent, SortIconPipe, SortTypePipe],
   providers: [
     {
       provide: MatPaginatorIntl,

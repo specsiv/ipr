@@ -5,8 +5,21 @@
   height: 100%;
 }
 
-.search {
-  width: 520px;
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+}
+
+.toolbar__search {
+  max-width: 520px;
+}
+
+.toolbar__sort-label {
+  justify-self: end;
+}
+
+.toolbar__sort-button {
+  justify-self: end;
 }
 
 .previews-grid {

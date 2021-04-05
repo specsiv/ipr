@@ -1,11 +1,13 @@
-<mat-toolbar [color]="'primary'">
-  <mat-form-field class="search">
+<mat-toolbar class="toolbar" [color]="'primary'">
+  <mat-form-field class="toolbar__search">
     <mat-label>Поиск</mat-label>
     <input type="text" matInput [(ngModel)]="searchText" (input)="search.emit(searchText)" />
     <button *ngIf="searchText" aria-label="Очистить" mat-button matSuffix mat-icon-button (click)="erase()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
+  <mat-label class="toolbar__sort-label">Сортировка</mat-label>
+  <app-sort-button class="toolbar__sort-button" [type]="sortType" (typeChange)="sort.emit($event)"></app-sort-button>
 </mat-toolbar>
 <div class="previews-grid">
   <ng-container #previews></ng-container>
