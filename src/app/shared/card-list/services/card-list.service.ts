@@ -4,7 +4,7 @@ import { ListSettings, SortType } from '../models/list-settings';
 
 export abstract class CardListService {
   private isStarted = false;
-  private cardListDestroy$ = new ReplaySubject<void>(1);
+  private destroy$ = new ReplaySubject<void>(1);
 
   private currentSettings: Readonly<ListSettings> = {
     limit: 5,
@@ -21,7 +21,7 @@ export abstract class CardListService {
   }
 
   constructor() {
-    this._settings$.pipe(takeUntil(this.cardListDestroy$)).subscribe((settings) => {
+    this._settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
       this.currentSettings = { ...settings };
 
       if (this.isStarted) {
@@ -33,8 +33,8 @@ export abstract class CardListService {
   protected onDestroy(): void {
     this.settingsSubject$.complete();
 
-    this.cardListDestroy$.next();
-    this.cardListDestroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   protected abstract request(settings: ListSettings): void;

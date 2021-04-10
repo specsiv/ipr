@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Order, SortType } from 'src/app/common/card-list/models/list-settings';
+import { Order, SortType } from '../models/list-settings';
 
 @Pipe({
   name: 'sortType',

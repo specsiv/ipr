@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { REVERSED_SORT, SORT } from 'src/app/shared/consts/icons';
+import { REVERSED_SORT, SORT } from '../../consts/icons';
 import { SortType } from '../../models/list-settings';
 
 @Component({

@@ -11,8 +11,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { CardPreviewComponent } from 'src/app/shared/card-previews/models/card-preview-component';
-import { CardList } from '../../models/card';
+import { CardList, CardPreviewComponent } from '../../models/card';
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
