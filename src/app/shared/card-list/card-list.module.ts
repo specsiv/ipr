@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { MatPaginatorLocal } from './services/mat-paginator-local';
+import { MatPaginatorLocal } from './logic/mat-paginator-local.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';

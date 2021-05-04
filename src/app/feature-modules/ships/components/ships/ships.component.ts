@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_TOKEN } from 'src/app/common/models/api';
 import { PageWithCardListComponent } from 'src/app/shared/card-list/components/page-with-card-list/page-with-card-list.component';
-import { ShipsGraphQLAPIService } from '../../services/ships-graphql-api.service';
-import { ShipsService } from '../../services/ships.service';
+import { ShipsGraphQLAPIService } from '../../api/ships-graphql-api.service';
+import { ShipsService } from '../../logic/ships.service';
 
 @Component({
   selector: 'app-ships',

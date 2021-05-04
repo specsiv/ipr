@@ -8,6 +8,8 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +18,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     RouterModule.forRoot(APP_ROUTES),
     GraphQLModule,
     HttpClientModule,
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production,
+      selectorOptions: {
+        suppressErrors: false,
+        injectContainerState: false,
+      },
+    }),
     BrowserAnimationsModule,
     MatToolbarModule,
   ],
