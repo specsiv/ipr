@@ -6,6 +6,24 @@
   margin-right: 20px;
 }
 
+.navigation__list {
+  display: flex;
+
+  list-style: none;
+}
+
+.navigation__link {
+  color: #fff;
+  display: block;
+
+  margin: 0 5px;
+  text-decoration: none;
+}
+
+.navigation__link--active {
+  text-decoration: underline;
+}
+
 .main {
   height: calc(100% - 64px);
 }

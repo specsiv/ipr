@@ -1,4 +1,4 @@
-import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
+import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ListSettings, SortType } from '../../../shared/card-list/models/list-settings';
 
@@ -6,21 +6,17 @@ export abstract class CardListService {
   private isStarted = false;
   private destroy$ = new ReplaySubject<void>(1);
 
-  private currentSettings: Readonly<ListSettings> = {
-    limit: 5,
-    offset: 0,
-    index: 0,
-    searchText: '',
-    order: 'ASC',
-  };
-  private settingsSubject$ = new BehaviorSubject<Readonly<ListSettings>>({ ...this.currentSettings });
-  private _settings$ = this.settingsSubject$.asObservable();
+  private currentSettings: ListSettings;
+  private _settings$: Observable<ListSettings>;
 
-  get settings$(): Observable<Readonly<ListSettings>> {
+  get settings$(): Observable<ListSettings> {
     return this._settings$;
   }
 
-  constructor() {
+  constructor(defaultSettings: ListSettings, settings$: Observable<ListSettings>) {
+    this.currentSettings = defaultSettings;
+    this._settings$ = settings$;
+
     this._settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
       this.currentSettings = { ...settings };
 
@@ -31,13 +27,13 @@ export abstract class CardListService {
   }
 
   protected onDestroy(): void {
-    this.settingsSubject$.complete();
-
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   protected abstract request(settings: ListSettings): void;
+
+  protected abstract saveSettings(settings: ListSettings): void;
 
   page(pageIndex: number, pageSize: number): void {
     this.load({
@@ -55,11 +51,11 @@ export abstract class CardListService {
     });
   }
 
-  load(settings?: Partial<Readonly<ListSettings>>): void {
+  load(settings?: Partial<ListSettings>): void {
     this.isStarted = true;
     settings = settings ?? {};
 
-    this.settingsSubject$.next({
+    this.saveSettings({
       ...this.currentSettings,
       ...settings,
     });

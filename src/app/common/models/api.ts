@@ -12,10 +12,10 @@ export const API_TOKEN = new InjectionToken<API>('API service interface');
 
 export interface ListAPI<T = object> {
   list$: Observable<CardList<T>>;
-  settings$: Observable<Readonly<ListSettings>>;
+  settings$: Observable<ListSettings>;
   page(pageIndex: number, pageSize: number): void;
   search(text: string): void;
-  load(settings?: Partial<Readonly<ListSettings>>): void;
+  load(settings?: Partial<ListSettings>): void;
   sort(type: SortType): void;
 }
 

@@ -23,7 +23,7 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
   private searchSubject$ = new Subject<string>();
   private destroy$ = new ReplaySubject<void>(1);
 
-  private _settings!: Readonly<ListSettings>;
+  private _settings!: ListSettings;
   private _list$: Observable<CardList>;
   private search$ = this.searchSubject$.pipe(debounceTime(300), distinctUntilChanged());
 
@@ -33,7 +33,7 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
     return this._list$;
   }
 
-  get settings(): Readonly<ListSettings> {
+  get settings(): ListSettings {
     return this._settings;
   }
 
@@ -44,26 +44,26 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(LIST_API_TOKEN) private listAPI: ListAPI,
     private activatedRoute: ActivatedRoute,
-    cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private router: Router
   ) {
     this._list$ = listAPI.list$;
+  }
 
-    listAPI.settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
+  ngOnInit(): void {
+    this.listAPI.load(this.getQuerySettings(this.activatedRoute.snapshot.queryParams));
+
+    this.listAPI.settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
       this._settings = { ...settings };
 
       this.updateQueryParams(this._settings);
 
-      cdr.markForCheck();
+      this.cdr.markForCheck();
     });
 
     this.search$.pipe(takeUntil(this.destroy$)).subscribe((text) => {
       this.listAPI.search(text);
     });
-  }
-
-  ngOnInit(): void {
-    this.listAPI.load(this.getQuerySettings(this.activatedRoute.snapshot.queryParams));
   }
 
   ngOnDestroy(): void {
@@ -74,7 +74,7 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
   }
 
   private getQuerySettings(queryParams: Params): Partial<ListSettings> {
-    const querySettings: Partial<ListSettings> = {};
+    const querySettings: { -readonly [K in keyof ListSettings]?: ListSettings[K] } = {};
 
     if (queryParams.hasOwnProperty('limit')) {
       querySettings.limit = filterPageSize(+queryParams.limit, this._pageOptions);
@@ -99,7 +99,7 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
     return querySettings;
   }
 
-  private updateQueryParams(settings: Readonly<ListSettings>): void {
+  private updateQueryParams(settings: ListSettings): void {
     const queryParams: Params = { ...settings };
 
     if (queryParams.searchText === '') {

@@ -1,9 +1,9 @@
 export interface ListSettings {
-  limit: number;
-  offset: number;
-  index: number;
-  searchText: string;
-  order: Order;
+  readonly limit: number;
+  readonly offset: number;
+  readonly index: number;
+  readonly searchText: string;
+  readonly order: Order;
 }
 
 export type Order = 'DESC' | 'ASC';

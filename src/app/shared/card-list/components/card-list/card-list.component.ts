@@ -30,12 +30,13 @@ const DEFAULT_PAGE_OPTIONS = [5, 25, 100];
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input() list$!: Observable<CardList>;
   @Input() set pageSize(size: number) {
-    this._pageSize = filterPageSize(size, this._pageOptions);
+    this.userPageSize = size;
+    this.filteredPageSize = filterPageSize(size, this._pageOptions);
   }
   @Input() set pageOptions(options: number[]) {
     this._pageOptions = options;
 
-    this._pageSize = filterPageSize(this._pageSize, this._pageOptions);
+    this.filteredPageSize = filterPageSize(this.userPageSize, this._pageOptions);
   }
   @Input() pageIndex = 0;
   @Input() searchText = '';
@@ -48,13 +49,14 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   @ViewChild('previews', { read: ViewContainerRef })
   previewsView!: ViewContainerRef;
 
-  private _pageSize = DEFAULT_PAGE_SIZE;
+  private userPageSize = DEFAULT_PAGE_SIZE;
+  private filteredPageSize = DEFAULT_PAGE_SIZE;
   private _pageOptions = DEFAULT_PAGE_OPTIONS;
   private _length = 0;
   private destroy$ = new ReplaySubject<void>(1);
 
   get pageSize(): number {
-    return this._pageSize;
+    return this.filteredPageSize;
   }
 
   get pageOptions(): number[] {

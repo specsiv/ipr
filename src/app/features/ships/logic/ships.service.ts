@@ -6,6 +6,9 @@ import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { CardListService } from 'src/app/common/card-list-wrapper/logic/card-list.service';
 import { Observable } from 'rxjs';
 import { ListAPI } from 'src/app/common/models/api';
+import { Store } from '@ngxs/store';
+import { SaveSettings } from '../store/ships.actions';
+import { ShipsState } from '../store/ships.state';
 
 @Injectable()
 export class ShipsService extends CardListService implements ListAPI<ShipCardPreviewData>, OnDestroy {
@@ -13,8 +16,8 @@ export class ShipsService extends CardListService implements ListAPI<ShipCardPre
     return this.ShipsAPI.list$;
   }
 
-  constructor(@Inject(API_TOKEN) private ShipsAPI: API<ShipCardPreviewData>) {
-    super();
+  constructor(@Inject(API_TOKEN) private ShipsAPI: API<ShipCardPreviewData>, private store: Store) {
+    super(store.selectSnapshot(ShipsState.settings), store.select(ShipsState.settings));
   }
 
   ngOnDestroy(): void {
@@ -23,5 +26,9 @@ export class ShipsService extends CardListService implements ListAPI<ShipCardPre
 
   request(settings: ListSettings): void {
     this.ShipsAPI.request(settings);
+  }
+
+  saveSettings(settings: ListSettings): void {
+    this.store.dispatch(new SaveSettings(settings));
   }
 }
