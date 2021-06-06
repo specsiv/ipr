@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { API_TOKEN } from 'src/app/common/models/api';
-import { PageWithCardListComponent } from 'src/app/shared/card-list/components/page-with-card-list/page-with-card-list.component';
+import { LIST_API_TOKEN } from 'src/app/common/models/api';
 import { ShipsGraphQLAPIService } from '../../api/ships-graphql-api.service';
 import { ShipsService } from '../../logic/ships.service';
 
@@ -15,15 +14,12 @@ import { ShipsService } from '../../logic/ships.service';
       provide: API_TOKEN,
       useClass: ShipsGraphQLAPIService,
     },
-    ShipsService,
+    {
+      provide: LIST_API_TOKEN,
+      useClass: ShipsService,
+    },
   ],
 })
-export class ShipsComponent extends PageWithCardListComponent implements OnDestroy {
-  constructor(shipsService: ShipsService, activatedRoute: ActivatedRoute, cdr: ChangeDetectorRef, router: Router) {
-    super(shipsService, activatedRoute, cdr, router);
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroy();
-  }
+export class ShipsComponent {
+  constructor() {}
 }

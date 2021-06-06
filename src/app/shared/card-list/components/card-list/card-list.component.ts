@@ -16,6 +16,10 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { SortType } from '../../models/list-settings';
+import { filterPageSize } from '../../utils/page-ulits';
+
+const DEFAULT_PAGE_SIZE = 5;
+const DEFAULT_PAGE_OPTIONS = [5, 25, 100];
 
 @Component({
   selector: 'app-card-list',
@@ -26,9 +30,12 @@ import { SortType } from '../../models/list-settings';
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input() list$!: Observable<CardList>;
   @Input() set pageSize(size: number) {
-    const currentOption = this.pageOptions.find((option) => option === size);
+    this._pageSize = filterPageSize(size, this._pageOptions);
+  }
+  @Input() set pageOptions(options: number[]) {
+    this._pageOptions = options;
 
-    this._pageSize = currentOption ?? this.pageOptions[0];
+    this._pageSize = filterPageSize(this._pageSize, this._pageOptions);
   }
   @Input() pageIndex = 0;
   @Input() searchText = '';
@@ -41,13 +48,17 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   @ViewChild('previews', { read: ViewContainerRef })
   previewsView!: ViewContainerRef;
 
-  private _pageSize = 5;
-  private pageOptions = [5, 15, 25];
+  private _pageSize = DEFAULT_PAGE_SIZE;
+  private _pageOptions = DEFAULT_PAGE_OPTIONS;
   private _length = 0;
   private destroy$ = new ReplaySubject<void>(1);
 
   get pageSize(): number {
     return this._pageSize;
+  }
+
+  get pageOptions(): number[] {
+    return this._pageOptions;
   }
 
   get length(): number {

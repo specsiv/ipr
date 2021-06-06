@@ -1,6 +1,6 @@
 import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ListSettings, SortType } from '../models/list-settings';
+import { ListSettings, SortType } from '../../../shared/card-list/models/list-settings';
 
 export abstract class CardListService {
   private isStarted = false;

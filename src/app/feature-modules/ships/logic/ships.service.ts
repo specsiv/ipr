@@ -3,9 +3,9 @@ import { ShipCardPreviewData } from 'src/app/common/card-previews/models/ship-ca
 import { API, API_TOKEN } from 'src/app/common/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
-import { CardListService } from 'src/app/shared/card-list/logic/card-list.service';
+import { CardListService } from 'src/app/common/card-list-wrapper/logic/card-list.service';
 import { Observable } from 'rxjs';
-import { ListAPI } from 'src/app/shared/card-list/models/list-api';
+import { ListAPI } from 'src/app/common/models/api';
 
 @Injectable()
 export class ShipsService extends CardListService implements ListAPI<ShipCardPreviewData>, OnDestroy {

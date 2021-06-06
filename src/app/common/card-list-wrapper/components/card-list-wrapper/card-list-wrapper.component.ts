@@ -1,19 +1,33 @@
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ListAPI } from '../../models/list-api';
-import { ListSettings, SortType } from '../../models/list-settings';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { CardList } from '../../models/card';
+import { DEFAULT_PAGE_OPTIONS } from 'src/app/common/card-list-wrapper/consts/defaults';
+import { CardList } from 'src/app/shared/card-list/models/card';
+import { ListAPI, LIST_API_TOKEN } from 'src/app/common/models/api';
+import { ListSettings, SortType } from 'src/app/shared/card-list/models/list-settings';
+import { filterPageSize } from 'src/app/shared/card-list/utils/page-ulits';
 
-export abstract class PageWithCardListComponent {
+@Component({
+  selector: 'app-card-list-wrapper',
+  templateUrl: './card-list-wrapper.component.html',
+  styleUrls: ['./card-list-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CardListWrapperComponent implements OnInit, OnDestroy {
+  @Input() set pageOptions(options: number[]) {
+    this._pageOptions = options;
+  }
+
   private searchSubject$ = new Subject<string>();
   private destroy$ = new ReplaySubject<void>(1);
 
   private _settings!: Readonly<ListSettings>;
   private _list$: Observable<CardList>;
   private search$ = this.searchSubject$.pipe(debounceTime(300), distinctUntilChanged());
+
+  private _pageOptions = DEFAULT_PAGE_OPTIONS;
 
   get list$(): Observable<CardList> {
     return this._list$;
@@ -23,14 +37,17 @@ export abstract class PageWithCardListComponent {
     return this._settings;
   }
 
+  get pageOptions(): number[] {
+    return this._pageOptions;
+  }
+
   constructor(
-    private listAPI: ListAPI,
+    @Inject(LIST_API_TOKEN) private listAPI: ListAPI,
     private activatedRoute: ActivatedRoute,
     cdr: ChangeDetectorRef,
     private router: Router
   ) {
     this._list$ = listAPI.list$;
-    listAPI.load(this.getQuerySettings(activatedRoute.snapshot.queryParams));
 
     listAPI.settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
       this._settings = { ...settings };
@@ -45,7 +62,11 @@ export abstract class PageWithCardListComponent {
     });
   }
 
-  protected onDestroy(): void {
+  ngOnInit(): void {
+    this.listAPI.load(this.getQuerySettings(this.activatedRoute.snapshot.queryParams));
+  }
+
+  ngOnDestroy(): void {
     this.searchSubject$.complete();
 
     this.destroy$.next();
@@ -56,7 +77,7 @@ export abstract class PageWithCardListComponent {
     const querySettings: Partial<ListSettings> = {};
 
     if (queryParams.hasOwnProperty('limit')) {
-      querySettings.limit = +queryParams.limit;
+      querySettings.limit = filterPageSize(+queryParams.limit, this._pageOptions);
     }
 
     if (queryParams.hasOwnProperty('offset')) {
