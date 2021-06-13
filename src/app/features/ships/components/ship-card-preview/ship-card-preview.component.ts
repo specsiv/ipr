@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CardPreviewComponent } from 'src/app/shared/card-list/models/card';
 import { SHIP } from '../../consts/icons';
 import { ShipCardPreviewData } from '../../models/ship-card-preview-data';
 
@@ -11,7 +10,7 @@ import { ShipCardPreviewData } from '../../models/ship-card-preview-data';
   styleUrls: ['./ship-card-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShipCardPreviewComponent implements CardPreviewComponent<ShipCardPreviewData> {
+export class ShipCardPreviewComponent {
   @Input() data!: ShipCardPreviewData;
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

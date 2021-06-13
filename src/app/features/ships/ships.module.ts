@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ShipsComponent } from './components/ships/ships.component';
 import { RouterModule } from '@angular/router';
 import { SHIP_ROUTES } from './routes';
-import { CardPreviewsModule } from 'src/app/common/card-previews/card-previews.module';
-import { CardListWrapperModule } from 'src/app/common/card-list-wrapper/card-list-wrapper.module';
+import { CardListWrapperModule } from 'src/app/core/card-list-wrapper/card-list-wrapper.module';
 import { NgxsModule } from '@ngxs/store';
 import { ShipsState } from './store/ships.state';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { ShipCardPreviewComponent } from './components/ship-card-preview/ship-card-preview.component';
 
 @NgModule({
   imports: [
@@ -14,8 +16,9 @@ import { ShipsState } from './store/ships.state';
     RouterModule.forChild(SHIP_ROUTES),
     NgxsModule.forFeature([ShipsState]),
     CardListWrapperModule,
-    CardPreviewsModule,
+    MatCardModule,
+    MatIconModule,
   ],
-  declarations: [ShipsComponent],
+  declarations: [ShipsComponent, ShipCardPreviewComponent],
 })
 export class ShipsModule {}

@@ -14,8 +14,10 @@ import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    RouterModule.forRoot(APP_ROUTES),
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    RouterModule.forRoot(APP_ROUTES, {
+      initialNavigation: 'enabled',
+    }),
     GraphQLModule,
     HttpClientModule,
     NgxsModule.forRoot([], {

@@ -3,9 +3,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { DEFAULT_PAGE_OPTIONS } from 'src/app/common/card-list-wrapper/consts/defaults';
+import { DEFAULT_PAGE_OPTIONS } from 'src/app/core/card-list-wrapper/consts/defaults';
 import { CardList } from 'src/app/shared/card-list/models/card';
-import { ListAPI, LIST_API_TOKEN } from 'src/app/common/models/api';
+import { ListAPI, LIST_API_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
 import { ListSettings, SortType } from 'src/app/shared/card-list/models/list-settings';
 import { filterPageSize } from 'src/app/shared/card-list/utils/page-ulits';
 

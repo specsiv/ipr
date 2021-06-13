@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { API_TOKEN } from 'src/app/common/models/api';
-import { LIST_API_TOKEN } from 'src/app/common/models/api';
+import { API_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
+import { LIST_API_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
 import { ShipsGraphQLAPIService } from '../../api/ships-graphql-api.service';
 import { ShipsService } from '../../logic/ships.service';
 

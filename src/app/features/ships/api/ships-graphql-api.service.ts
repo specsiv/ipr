@@ -3,11 +3,11 @@ import { QueryRef } from 'apollo-angular';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { Exact, ShipsGQL, ShipsQuery } from 'src/app/api/graphql';
-import { ShipCardPreviewComponent } from 'src/app/common/card-previews/components/ship-card-preview/ship-card-preview.component';
-import { API } from 'src/app/common/models/api';
+import { API } from 'src/app/core/card-list-wrapper/models/api';
 import { Card, CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
-import { ShipCardPreviewData } from '../../../common/card-previews/models/ship-card-preview-data';
+import { ShipCardPreviewComponent } from '../components/ship-card-preview/ship-card-preview.component';
+import { ShipCardPreviewData } from '../models/ship-card-preview-data';
 
 @Injectable()
 export class ShipsGraphQLAPIService implements API<ShipCardPreviewData>, OnDestroy {
