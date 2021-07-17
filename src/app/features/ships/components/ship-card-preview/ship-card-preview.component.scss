@@ -2,6 +2,13 @@
   display: block;
 }
 
+.header {
+  align-content: center;
+  display: flex;
+
+  height: 80px;
+}
+
 .image {
   display: block;
 
@@ -12,4 +19,5 @@
 
 .content {
   height: 20px;
+  margin-top: 20px;
 }
