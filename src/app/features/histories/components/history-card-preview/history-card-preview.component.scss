@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.header {
+  align-content: center;
+  display: flex;
+
+  height: 80px;
+}
+
+.icon {
+  display: block;
+
+  height: 200px;
+}
+
+.content {
+  height: 20px;
+  margin-top: 20px;
+}

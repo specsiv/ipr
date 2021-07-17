@@ -11,7 +11,7 @@ import { ShipCardPreviewData } from '../models/ship-card-preview-data';
 
 @Injectable()
 export class ShipsGraphQLAPIService implements API<ShipCardPreviewData>, OnDestroy {
-  private shipsDestroy$ = new ReplaySubject<void>(1);
+  private destroy$ = new ReplaySubject<void>(1);
 
   private shipsQuery: QueryRef<ShipsQuery, Exact<any>> | null = null;
   private _gqlShips$: Observable<CardList<ShipCardPreviewData>> | null = null;
@@ -27,8 +27,8 @@ export class ShipsGraphQLAPIService implements API<ShipCardPreviewData>, OnDestr
   ngOnDestroy(): void {
     this.listSubject$.complete();
 
-    this.shipsDestroy$.next();
-    this.shipsDestroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private mapShipsQuery({ data }: { data: ShipsQuery }): CardList<ShipCardPreviewData> {
@@ -61,7 +61,7 @@ export class ShipsGraphQLAPIService implements API<ShipCardPreviewData>, OnDestr
       this.shipsQuery = this.shipsGQL.watch(settings);
       this._gqlShips$ = this.shipsQuery.valueChanges.pipe(map(this.mapShipsQuery));
 
-      this._gqlShips$.pipe(takeUntil(this.shipsDestroy$)).subscribe((ships) => this.listSubject$.next(ships));
+      this._gqlShips$.pipe(takeUntil(this.destroy$)).subscribe((ships) => this.listSubject$.next(ships));
     } else if (this.shipsQuery) {
       this.shipsQuery.setVariables(settings);
     }

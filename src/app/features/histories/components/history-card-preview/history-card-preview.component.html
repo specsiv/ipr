@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-header class="header">
+    <mat-card-title>{{ data.title }}</mat-card-title>
+    <mat-card-subtitle>Тип: история</mat-card-subtitle>
+  </mat-card-header>
+  <mat-icon
+    class="icon"
+    aria-hidden="false"
+    [attr.aria-label]="'Иконка истории ' + data.title"
+    [inline]="true"
+    [svgIcon]="'ship'"
+  ></mat-icon>
+  <mat-card-content class="content">
+    <p *ngIf="data.date">Дата: {{ data.date | date }}</p>
+  </mat-card-content>
+</mat-card>

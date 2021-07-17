@@ -1,1 +1,1 @@
-export const DEFAULT_PAGE_OPTIONS = [5, 15, 25];
+export const DEFAULT_PAGE_OPTIONS = [8, 16, 32];

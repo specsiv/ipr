@@ -1274,6 +1274,22 @@ export type CoreMission = {
   flight?: Maybe<Scalars['Int']>;
 };
 
+export type HistoriesQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  searchText?: Maybe<Scalars['ID']>;
+  order?: Maybe<Scalars['String']>;
+}>;
+
+export type HistoriesQuery = { __typename?: 'Query' } & {
+  historiesResult?: Maybe<
+    { __typename?: 'HistoriesResult' } & {
+      data?: Maybe<Array<Maybe<{ __typename?: 'History' } & Pick<History, 'id' | 'title' | 'event_date_utc'>>>>;
+      result?: Maybe<{ __typename?: 'Result' } & Pick<Result, 'totalCount'>>;
+    }
+  >;
+};
+
 export type ShipsQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -1290,6 +1306,31 @@ export type ShipsQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export const HistoriesDocument = gql`
+  query histories($limit: Int, $offset: Int, $searchText: ID, $order: String) {
+    historiesResult(limit: $limit, offset: $offset, find: { id: $searchText }, sort: "id", order: $order) {
+      data {
+        id
+        title
+        event_date_utc
+      }
+      result {
+        totalCount
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class HistoriesGQL extends Apollo.Query<HistoriesQuery, HistoriesQueryVariables> {
+  document = HistoriesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const ShipsDocument = gql`
   query ships($limit: Int, $offset: Int, $searchText: String, $order: String) {
     shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }, sort: "name", order: $order) {

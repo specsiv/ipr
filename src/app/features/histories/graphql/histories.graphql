@@ -1,0 +1,12 @@
+query histories($limit: Int, $offset: Int, $searchText: ID, $order: String) {
+  historiesResult(limit: $limit, offset: $offset, find: { id: $searchText }, sort: "id", order: $order) {
+    data {
+      id
+      title
+      event_date_utc
+    }
+    result {
+      totalCount
+    }
+  }
+}
