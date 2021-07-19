@@ -1,22 +1,31 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { API, API_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
+import { API, API_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { CardListService } from 'src/app/core/card-list-wrapper/logic/card-list.service';
 import { Observable } from 'rxjs';
-import { ListAPI } from 'src/app/core/card-list-wrapper/models/api';
+import { IList } from 'src/app/core/card-list-wrapper/models/api';
 import { Store } from '@ngxs/store';
 import { SaveSettings } from '../store/histories.actions';
 import { HistoriesState } from '../store/histories.state';
-import { HistoryCardPreviewData } from '../models/history-card-preview-data';
+import { HistoryCardData, HistoryCardPreviewData } from '../models/history-card';
 
 @Injectable()
-export class HistoriesService extends CardListService implements ListAPI<HistoryCardPreviewData>, OnDestroy {
+export class HistoriesService
+  extends CardListService
+  implements IList<HistoryCardPreviewData>, ICard<HistoryCardData>, OnDestroy {
   get list$(): Observable<CardList<HistoryCardPreviewData>> {
-    return this.HistoriesAPI.list$;
+    return this.historiesAPI.list$;
   }
 
-  constructor(@Inject(API_TOKEN) private HistoriesAPI: API<HistoryCardPreviewData>, private store: Store) {
+  get card$(): Observable<HistoryCardData | null> {
+    return this.historiesAPI.card$;
+  }
+
+  constructor(
+    @Inject(API_TOKEN) private historiesAPI: API<HistoryCardPreviewData, HistoryCardData>,
+    private store: Store
+  ) {
     super(store.selectSnapshot(HistoriesState.settings), store.select(HistoriesState.settings));
   }
 
@@ -24,11 +33,15 @@ export class HistoriesService extends CardListService implements ListAPI<History
     this.onDestroy();
   }
 
-  request(settings: ListSettings): void {
-    this.HistoriesAPI.request(settings);
+  protected requestList(settings: ListSettings): void {
+    this.historiesAPI.requestList(settings);
   }
 
-  saveSettings(settings: ListSettings): void {
+  protected saveSettings(settings: ListSettings): void {
     this.store.dispatch(new SaveSettings(settings));
+  }
+
+  loadCard(id: string): void {
+    this.historiesAPI.requestCard(id);
   }
 }

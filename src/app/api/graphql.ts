@@ -1290,6 +1290,22 @@ export type HistoriesQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export type HistoryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type HistoryQuery = { __typename?: 'Query' } & {
+  history?: Maybe<
+    { __typename?: 'History' } & Pick<History, 'id' | 'title' | 'event_date_utc' | 'details'> & {
+        flight?: Maybe<
+          { __typename?: 'Launch' } & {
+            ships?: Maybe<Array<Maybe<{ __typename?: 'Ship' } & Pick<Ship, 'name' | 'id'>>>>;
+          }
+        >;
+      }
+  >;
+};
+
 export type ShipsQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -1304,6 +1320,14 @@ export type ShipsQuery = { __typename?: 'Query' } & {
       result?: Maybe<{ __typename?: 'Result' } & Pick<Result, 'totalCount'>>;
     }
   >;
+};
+
+export type ShipQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ShipQuery = { __typename?: 'Query' } & {
+  ship?: Maybe<{ __typename?: 'Ship' } & Pick<Ship, 'id' | 'name' | 'image' | 'year_built' | 'roles' | 'type'>>;
 };
 
 export const HistoriesDocument = gql`
@@ -1331,6 +1355,33 @@ export class HistoriesGQL extends Apollo.Query<HistoriesQuery, HistoriesQueryVar
     super(apollo);
   }
 }
+export const HistoryDocument = gql`
+  query history($id: ID!) {
+    history(id: $id) {
+      id
+      title
+      event_date_utc
+      details
+      flight {
+        ships {
+          name
+          id
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class HistoryGQL extends Apollo.Query<HistoryQuery, HistoryQueryVariables> {
+  document = HistoryDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const ShipsDocument = gql`
   query ships($limit: Int, $offset: Int, $searchText: String, $order: String) {
     shipsResult(limit: $limit, offset: $offset, find: { name: $searchText }, sort: "name", order: $order) {
@@ -1352,6 +1403,29 @@ export const ShipsDocument = gql`
 })
 export class ShipsGQL extends Apollo.Query<ShipsQuery, ShipsQueryVariables> {
   document = ShipsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ShipDocument = gql`
+  query ship($id: ID!) {
+    ship(id: $id) {
+      id
+      name
+      image
+      year_built
+      roles
+      type
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ShipGQL extends Apollo.Query<ShipQuery, ShipQueryVariables> {
+  document = ShipDocument;
 
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

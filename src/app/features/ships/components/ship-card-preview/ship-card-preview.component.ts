@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SHIP } from '../../consts/icons';
-import { ShipCardPreviewData } from '../../models/ship-card-preview-data';
+import { ShipCardPreviewData } from '../../models/ship-card';
 
 @Component({
   selector: 'app-ship-card-preview',

@@ -11,3 +11,14 @@ query ships($limit: Int, $offset: Int, $searchText: String, $order: String) {
     }
   }
 }
+
+query ship($id: ID!) {
+  ship(id: $id) {
+    id
+    name
+    image
+    year_built
+    roles
+    type
+  }
+}

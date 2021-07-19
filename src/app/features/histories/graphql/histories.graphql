@@ -10,3 +10,18 @@ query histories($limit: Int, $offset: Int, $searchText: ID, $order: String) {
     }
   }
 }
+
+query history($id: ID!) {
+  history(id: $id) {
+    id
+    title
+    event_date_utc
+    details
+    flight {
+      ships {
+        name
+        id
+      }
+    }
+  }
+}

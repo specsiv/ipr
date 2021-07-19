@@ -21,7 +21,7 @@ export abstract class CardListService {
       this.currentSettings = { ...settings };
 
       if (this.isStarted) {
-        this.request({ ...settings });
+        this.requestList({ ...settings });
       }
     });
   }
@@ -31,12 +31,12 @@ export abstract class CardListService {
     this.destroy$.complete();
   }
 
-  protected abstract request(settings: ListSettings): void;
+  protected abstract requestList(settings: ListSettings): void;
 
   protected abstract saveSettings(settings: ListSettings): void;
 
   page(pageIndex: number, pageSize: number): void {
-    this.load({
+    this.loadList({
       limit: pageSize,
       offset: pageIndex * pageSize,
       index: pageIndex,
@@ -44,14 +44,14 @@ export abstract class CardListService {
   }
 
   search(text: string): void {
-    this.load({
+    this.loadList({
       searchText: text,
       offset: 0,
       index: 0,
     });
   }
 
-  load(settings?: Partial<ListSettings>): void {
+  loadList(settings?: Partial<ListSettings>): void {
     this.isStarted = true;
     settings = settings ?? {};
 
@@ -62,7 +62,7 @@ export abstract class CardListService {
   }
 
   sort(type: SortType): void {
-    this.load({
+    this.loadList({
       order: type ? 'DESC' : 'ASC',
     });
   }

@@ -5,7 +5,7 @@ import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { DEFAULT_PAGE_OPTIONS } from 'src/app/core/card-list-wrapper/consts/defaults';
 import { CardList } from 'src/app/shared/card-list/models/card';
-import { ListAPI, LIST_API_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
+import { IList, LIST_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
 import { ListSettings, SortType } from 'src/app/shared/card-list/models/list-settings';
 import { filterPageSize } from 'src/app/shared/card-list/utils/page-ulits';
 
@@ -42,8 +42,8 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(LIST_API_TOKEN) private listAPI: ListAPI,
-    private activatedRoute: ActivatedRoute,
+    @Inject(LIST_TOKEN) private listAPI: IList,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private router: Router
   ) {
@@ -51,7 +51,7 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.listAPI.load(this.getQuerySettings(this.activatedRoute.snapshot.queryParams));
+    this.listAPI.loadList(this.getQuerySettings(this.route.snapshot.queryParams));
 
     this.listAPI.settings$.pipe(takeUntil(this.destroy$)).subscribe((settings) => {
       this._settings = { ...settings };
@@ -107,7 +107,7 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
     }
 
     this.router.navigate([], {
-      relativeTo: this.activatedRoute,
+      relativeTo: this.route,
       queryParams,
       preserveFragment: true,
       replaceUrl: true,
