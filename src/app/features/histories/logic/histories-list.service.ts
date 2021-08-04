@@ -11,15 +11,9 @@ import { HistoriesState } from '../store/histories.state';
 import { HistoryCardData, HistoryCardPreviewData } from '../models/history-card';
 
 @Injectable()
-export class HistoriesService
-  extends CardListService
-  implements IList<HistoryCardPreviewData>, ICard<HistoryCardData>, OnDestroy {
+export class HistoriesListService extends CardListService implements IList<HistoryCardPreviewData>, OnDestroy {
   get list$(): Observable<CardList<HistoryCardPreviewData>> {
     return this.historiesAPI.list$;
-  }
-
-  get card$(): Observable<HistoryCardData | null> {
-    return this.historiesAPI.card$;
   }
 
   constructor(
@@ -39,9 +33,5 @@ export class HistoriesService
 
   protected saveSettings(settings: ListSettings): void {
     this.store.dispatch(new SaveSettings(settings));
-  }
-
-  loadCard(id: string): void {
-    this.historiesAPI.requestCard(id);
   }
 }

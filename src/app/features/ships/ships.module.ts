@@ -12,7 +12,8 @@ import { ShipCardPreviewComponent } from './components/ship-card-preview/ship-ca
 import { ShipComponent } from './components/ship/ship.component';
 import { API_TOKEN, CARD_TOKEN, LIST_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
 import { ShipsGraphQLAPIService } from './api/ships-graphql-api.service';
-import { ShipsService } from './logic/ships.service';
+import { ShipsListService } from './logic/ships-list.service';
+import { ShipCardsService } from './logic/ship-cards.service';
 
 @NgModule({
   imports: [
@@ -31,11 +32,11 @@ import { ShipsService } from './logic/ships.service';
     },
     {
       provide: LIST_TOKEN,
-      useClass: ShipsService,
+      useClass: ShipsListService,
     },
     {
       provide: CARD_TOKEN,
-      useExisting: LIST_TOKEN,
+      useClass: ShipCardsService,
     },
   ],
 })

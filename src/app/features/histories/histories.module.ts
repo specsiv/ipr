@@ -11,8 +11,9 @@ import { HistoryCardPreviewComponent } from './components/history-card-preview/h
 import { HistoriesState } from './store/histories.state';
 import { API_TOKEN, CARD_TOKEN, LIST_TOKEN } from 'src/app/core/card-list-wrapper/models/api';
 import { HistoriesGraphQLAPIService } from './api/histories-graphql-api.service';
-import { HistoriesService } from './logic/histories.service';
+import { HistoryCardsService } from './logic/history-cards.service';
 import { HistoryComponent } from './components/history/history.component';
+import { HistoriesListService } from './logic/histories-list.service';
 
 @NgModule({
   imports: [
@@ -30,11 +31,11 @@ import { HistoryComponent } from './components/history/history.component';
     },
     {
       provide: LIST_TOKEN,
-      useClass: HistoriesService,
+      useClass: HistoriesListService,
     },
     {
       provide: CARD_TOKEN,
-      useExisting: LIST_TOKEN,
+      useClass: HistoryCardsService,
     },
   ],
   declarations: [HistoriesComponent, HistoryCardPreviewComponent, HistoryComponent],
