@@ -2,7 +2,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { CardListService } from 'src/app/core/card-list-wrapper/logic/card-list.service';
-import { API, API_TOKEN, IList } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI, API_TOKEN, IList } from 'src/app/core/card-list-wrapper/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ShipCardData, ShipCardPreviewData } from '../models/ship-card';
 import { ShipsState } from '../store/ships.state';
@@ -15,7 +15,10 @@ export class ShipsListService extends CardListService implements IList<ShipCardP
     return this.shipsAPI.list$;
   }
 
-  constructor(@Inject(API_TOKEN) private shipsAPI: API<ShipCardPreviewData, ShipCardData>, private store: Store) {
+  constructor(
+    @Inject(API_TOKEN) private readonly shipsAPI: IAPI<ShipCardPreviewData, ShipCardData>,
+    private readonly store: Store
+  ) {
     super(store.selectSnapshot(ShipsState.settings), store.select(ShipsState.settings));
   }
 

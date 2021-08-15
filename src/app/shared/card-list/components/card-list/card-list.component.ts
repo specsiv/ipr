@@ -3,20 +3,21 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   Output,
+  Renderer2,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
-import { CardList, CardPreviewComponent } from '../../models/card';
+import { CardList, ICardPreviewComponent } from '../../models/card';
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { SortType } from '../../models/list-settings';
 import { filterPageSize } from '../../utils/page-ulits';
+import { NgElement, WithProperties } from '@angular/elements';
 
 const DEFAULT_PAGE_SIZE = 5;
 const DEFAULT_PAGE_OPTIONS = [5, 25, 100];
@@ -46,8 +47,8 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   @Output() search = new EventEmitter<string>();
   @Output() sort = new EventEmitter<SortType>();
 
-  @ViewChild('previews', { read: ViewContainerRef })
-  previewsView!: ViewContainerRef;
+  @ViewChild('previews', { read: ElementRef })
+  previews!: ElementRef<HTMLDivElement>;
 
   private userPageSize = DEFAULT_PAGE_SIZE;
   private filteredPageSize = DEFAULT_PAGE_SIZE;
@@ -67,21 +68,22 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
     return this._length;
   }
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private cdr: ChangeDetectorRef) {}
+  constructor(private readonly cdr: ChangeDetectorRef, private readonly renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
     this.list$.pipe(takeUntil(this.destroy$)).subscribe((cardList) => {
       this._length = cardList.length;
 
-      this.previewsView.clear();
+      this.previews.nativeElement.innerHTML = '';
 
-      for (const card of cardList.list) {
-        const component = this.previewsView.createComponent<CardPreviewComponent>(
-          this.componentFactoryResolver.resolveComponentFactory(card.component)
+      cardList.list.forEach((card) => {
+        const cardElem: NgElement & WithProperties<ICardPreviewComponent> = this.renderer.createElement(
+          card.elementName
         );
+        cardElem.data = card.data;
 
-        component.instance.data = card.data;
-      }
+        this.renderer.appendChild(this.previews.nativeElement, cardElem);
+      });
 
       this.cdr.markForCheck();
     });

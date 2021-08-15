@@ -3,14 +3,14 @@ import { QueryRef } from 'apollo-angular';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { Exact, HistoriesGQL, HistoriesQuery, HistoryGQL, HistoryQuery } from 'src/app/api/graphql';
-import { API } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI } from 'src/app/core/card-list-wrapper/models/api';
 import { Card, CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { HistoryCardPreviewComponent } from '../components/history-card-preview/history-card-preview.component';
 import { HistoryCardData, HistoryCardPreviewData } from '../models/history-card';
 
 @Injectable()
-export class HistoriesGraphQLAPIService implements API<HistoryCardPreviewData, HistoryCardData>, OnDestroy {
+export class HistoriesGraphQLAPIService implements IAPI<HistoryCardPreviewData, HistoryCardData>, OnDestroy {
   private destroy$ = new ReplaySubject<void>(1);
 
   private historiesQuery: QueryRef<HistoriesQuery, Exact<any>> | null = null;
@@ -33,7 +33,7 @@ export class HistoriesGraphQLAPIService implements API<HistoryCardPreviewData, H
     return this._card$;
   }
 
-  constructor(private historiesGQL: HistoriesGQL, private historyGQL: HistoryGQL) {}
+  constructor(private readonly historiesGQL: HistoriesGQL, private readonly historyGQL: HistoryGQL) {}
 
   ngOnDestroy(): void {
     this.listSubject$.complete();
@@ -53,7 +53,7 @@ export class HistoriesGraphQLAPIService implements API<HistoryCardPreviewData, H
                 title: history?.title ?? null,
                 date: history?.event_date_utc ? new Date(history.event_date_utc) : null,
               },
-              component: HistoryCardPreviewComponent,
+              elementName: 'history-card-preview',
             };
           }
         ),

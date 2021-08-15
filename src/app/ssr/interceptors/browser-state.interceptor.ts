@@ -6,7 +6,7 @@ import { Response } from '../models/response';
 
 @Injectable()
 export class BrowserStateInterceptor implements HttpInterceptor {
-  constructor(private transferState: TransferState) {}
+  constructor(private readonly transferState: TransferState) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const key = makeStateKey(req.url);

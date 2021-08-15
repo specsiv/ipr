@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { API, API_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI, API_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { CardListService } from 'src/app/core/card-list-wrapper/logic/card-list.service';
@@ -17,8 +17,8 @@ export class HistoriesListService extends CardListService implements IList<Histo
   }
 
   constructor(
-    @Inject(API_TOKEN) private historiesAPI: API<HistoryCardPreviewData, HistoryCardData>,
-    private store: Store
+    @Inject(API_TOKEN) private readonly historiesAPI: IAPI<HistoryCardPreviewData, HistoryCardData>,
+    private readonly store: Store
   ) {
     super(store.selectSnapshot(HistoriesState.settings), store.select(HistoriesState.settings));
   }

@@ -1,4 +1,5 @@
 export interface ShipCardPreviewData {
+  id: string | null;
   name: string | null;
   image: string | null;
   year: number | null;

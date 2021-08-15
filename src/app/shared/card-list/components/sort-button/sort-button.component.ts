@@ -15,7 +15,7 @@ export class SortButtonComponent {
 
   @Output() typeChange = new EventEmitter<SortType>();
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(readonly iconRegistry: MatIconRegistry, readonly sanitizer: DomSanitizer) {
     iconRegistry.addSvgIconLiteral('sort', sanitizer.bypassSecurityTrustHtml(SORT));
     iconRegistry.addSvgIconLiteral('reversed-sort', sanitizer.bypassSecurityTrustHtml(REVERSED_SORT));
   }

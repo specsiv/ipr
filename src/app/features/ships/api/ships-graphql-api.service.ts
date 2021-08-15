@@ -3,14 +3,14 @@ import { QueryRef } from 'apollo-angular';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { Exact, ShipsGQL, ShipsQuery, ShipQuery, ShipGQL } from 'src/app/api/graphql';
-import { API } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI } from 'src/app/core/card-list-wrapper/models/api';
 import { Card, CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { ShipCardPreviewComponent } from '../components/ship-card-preview/ship-card-preview.component';
 import { ShipCardData, ShipCardPreviewData } from '../models/ship-card';
 
 @Injectable()
-export class ShipsGraphQLAPIService implements API<ShipCardPreviewData, ShipCardData>, OnDestroy {
+export class ShipsGraphQLAPIService implements IAPI<ShipCardPreviewData, ShipCardData>, OnDestroy {
   private destroy$ = new ReplaySubject<void>(1);
 
   private shipsQuery: QueryRef<ShipsQuery, Exact<any>> | null = null;
@@ -33,7 +33,7 @@ export class ShipsGraphQLAPIService implements API<ShipCardPreviewData, ShipCard
     return this._card$;
   }
 
-  constructor(private shipsGQL: ShipsGQL, private shipGQL: ShipGQL) {}
+  constructor(private readonly shipsGQL: ShipsGQL, private readonly shipGQL: ShipGQL) {}
 
   ngOnDestroy(): void {
     this.listSubject$.complete();
@@ -49,11 +49,12 @@ export class ShipsGraphQLAPIService implements API<ShipCardPreviewData, ShipCard
           (ship): Card<ShipCardPreviewData> => {
             return {
               data: {
+                id: ship?.id ?? null,
                 name: ship?.name ?? null,
                 image: ship?.image ?? null,
                 year: ship?.year_built ?? null,
               },
-              component: ShipCardPreviewComponent,
+              elementName: 'ship-card-preview',
             };
           }
         ),

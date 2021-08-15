@@ -42,10 +42,10 @@ export class CardListWrapperComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(LIST_TOKEN) private listAPI: IList,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private router: Router
+    @Inject(LIST_TOKEN) private readonly listAPI: IList,
+    private readonly route: ActivatedRoute,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router
   ) {
     this._list$ = listAPI.list$;
   }

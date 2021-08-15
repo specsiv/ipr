@@ -17,7 +17,7 @@ export class ShipComponent {
     return this._card$;
   }
 
-  constructor(@Inject(CARD_TOKEN) cardService: ICard<ShipCardData>, route: ActivatedRoute) {
+  constructor(@Inject(CARD_TOKEN) readonly cardService: ICard<ShipCardData>, readonly route: ActivatedRoute) {
     const id = route.snapshot.paramMap.get('id');
     this._card$ = cardService.card$;
 

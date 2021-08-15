@@ -1,15 +1,17 @@
-import { Type } from '@angular/core';
+export interface BaseCardData {
+  id: string | null;
+}
 
-export interface CardPreviewComponent<T = object> {
+export interface ICardPreviewComponent<T extends BaseCardData = { id: string | null }> {
   data: T;
 }
 
-export interface Card<T = object> {
+export interface Card<T extends BaseCardData = { id: string | null }> {
   data: T;
-  component: Type<CardPreviewComponent<T>>;
+  elementName: string;
 }
 
-export interface CardList<T = object> {
+export interface CardList<T extends BaseCardData = { id: string | null }> {
   list: Card<T>[];
   length: number;
 }

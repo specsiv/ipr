@@ -13,7 +13,7 @@ export abstract class CardListService {
     return this._settings$;
   }
 
-  constructor(defaultSettings: ListSettings, settings$: Observable<ListSettings>) {
+  constructor(readonly defaultSettings: ListSettings, settings$: Observable<ListSettings>) {
     this.currentSettings = defaultSettings;
     this._settings$ = settings$;
 

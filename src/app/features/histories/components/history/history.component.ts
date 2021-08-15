@@ -17,7 +17,7 @@ export class HistoryComponent {
     return this._card$;
   }
 
-  constructor(@Inject(CARD_TOKEN) cardService: ICard<HistoryCardData>, route: ActivatedRoute) {
+  constructor(@Inject(CARD_TOKEN) readonly cardService: ICard<HistoryCardData>, readonly route: ActivatedRoute) {
     const id = route.snapshot.paramMap.get('id');
     this._card$ = cardService.card$;
 

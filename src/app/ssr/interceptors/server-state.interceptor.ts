@@ -7,7 +7,7 @@ import { Response } from '../models/response';
 
 @Injectable()
 export class ServerStateInterceptor implements HttpInterceptor {
-  constructor(private transferState: TransferState) {}
+  constructor(private readonly transferState: TransferState) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
