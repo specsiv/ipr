@@ -12,11 +12,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SortButtonComponent } from './components/sort-button/sort-button.component';
 import { SortIconPipe } from './pipes/sort-icon.pipe';
 import { SortTypePipe } from './pipes/sort-type.pipe';
+import { CardWrapperComponent } from './components/card-wrapper/card-wrapper.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     MatPaginatorModule,
     MatToolbarModule,
     MatInputModule,
@@ -25,7 +28,7 @@ import { SortTypePipe } from './pipes/sort-type.pipe';
     MatIconModule,
   ],
   exports: [CardListComponent, SortTypePipe],
-  declarations: [CardListComponent, SortButtonComponent, SortIconPipe, SortTypePipe],
+  declarations: [CardListComponent, SortButtonComponent, SortIconPipe, SortTypePipe, CardWrapperComponent],
   providers: [
     {
       provide: MatPaginatorIntl,

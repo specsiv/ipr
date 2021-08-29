@@ -9,7 +9,9 @@
   <mat-label class="toolbar__sort-label">Сортировка</mat-label>
   <app-sort-button class="toolbar__sort-button" [type]="sortType" (typeChange)="sort.emit($event)"></app-sort-button>
 </mat-toolbar>
-<div #previews class="previews-grid"></div>
+<div class="previews-grid">
+  <app-card-wrapper *ngFor="let card of (list$ | async)?.list; trackBy: trackBy" [card]="card"></app-card-wrapper>
+</div>
 <mat-paginator
   [color]="'accent'"
   [pageSizeOptions]="pageOptions"

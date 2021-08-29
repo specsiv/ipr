@@ -54,7 +54,7 @@ export class ShipsGraphQLAPIService implements IAPI<ShipCardPreviewData, ShipCar
                 image: ship?.image ?? null,
                 year: ship?.year_built ?? null,
               },
-              elementName: 'ship-card-preview',
+              cardPreviewComponent: ShipCardPreviewComponent,
             };
           }
         ),

@@ -53,7 +53,7 @@ export class HistoriesGraphQLAPIService implements IAPI<HistoryCardPreviewData, 
                 title: history?.title ?? null,
                 date: history?.event_date_utc ? new Date(history.event_date_utc) : null,
               },
-              elementName: 'history-card-preview',
+              cardPreviewComponent: HistoryCardPreviewComponent,
             };
           }
         ),
