@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Card, CardList } from '../../models/card';
 import { Observable, ReplaySubject } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { SortType } from '../../models/list-settings';
 import { filterPageSize } from '../../utils/page-utils';
+import { takeUntil } from 'rxjs/operators';
 
 const DEFAULT_PAGE_SIZE = 5;
 const DEFAULT_PAGE_OPTIONS = [5, 25, 100];
@@ -36,7 +37,6 @@ export class CardListComponent implements OnDestroy {
   private userPageSize = DEFAULT_PAGE_SIZE;
   private filteredPageSize = DEFAULT_PAGE_SIZE;
   private _pageOptions = DEFAULT_PAGE_OPTIONS;
-  private _length = 0;
   private destroy$ = new ReplaySubject<void>(1);
 
   get pageSize(): number {
@@ -45,10 +45,6 @@ export class CardListComponent implements OnDestroy {
 
   get pageOptions(): number[] {
     return this._pageOptions;
-  }
-
-  get length(): number {
-    return this._length;
   }
 
   constructor() {}
@@ -64,7 +60,7 @@ export class CardListComponent implements OnDestroy {
     this.search.emit(this.searchText);
   }
 
-  trackBy(index: number, card: Card): number {
-    return index;
+  trackBy(index: number, card: Card): string {
+    return card.data.id;
   }
 }

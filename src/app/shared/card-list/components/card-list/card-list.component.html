@@ -17,7 +17,7 @@
   [pageSizeOptions]="pageOptions"
   [pageSize]="pageSize"
   [pageIndex]="pageIndex"
-  [length]="length"
+  [length]="(list$ | async)?.length || 0"
   (page)="page.emit($event)"
 >
 </mat-paginator>

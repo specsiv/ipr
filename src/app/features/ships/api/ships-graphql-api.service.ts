@@ -21,17 +21,10 @@ export class ShipsGraphQLAPIService implements IAPI<ShipCardPreviewData, ShipCar
     list: [],
     length: 0,
   });
-  private _list$ = this.listSubject$.asObservable();
   private cardSubject$ = new BehaviorSubject<ShipCardData | null>(null);
-  private _card$ = this.cardSubject$.asObservable();
 
-  get list$(): Observable<CardList<ShipCardPreviewData>> {
-    return this._list$;
-  }
-
-  get card$(): Observable<ShipCardData | null> {
-    return this._card$;
-  }
+  readonly list$ = this.listSubject$.asObservable();
+  readonly card$ = this.cardSubject$.asObservable();
 
   constructor(private readonly shipsGQL: ShipsGQL, private readonly shipGQL: ShipGQL) {}
 
@@ -44,20 +37,25 @@ export class ShipsGraphQLAPIService implements IAPI<ShipCardPreviewData, ShipCar
 
   private mapShipsQuery({ data }: { data: ShipsQuery }): CardList<ShipCardPreviewData> {
     if (data.shipsResult && data.shipsResult.data && data.shipsResult.result?.totalCount) {
+      const mappedList: Card<ShipCardPreviewData>[] = [];
+
+      data.shipsResult.data.forEach((ship) => {
+        if (ship) {
+          mappedList.push({
+            data: {
+              // tslint:disable-next-line: no-non-null-assertion
+              id: ship.id!,
+              name: ship.name ?? null,
+              image: ship.image ?? null,
+              year: ship.year_built ?? null,
+            },
+            cardPreviewComponent: ShipCardPreviewComponent,
+          });
+        }
+      });
+
       return {
-        list: data.shipsResult.data.map(
-          (ship): Card<ShipCardPreviewData> => {
-            return {
-              data: {
-                id: ship?.id ?? null,
-                name: ship?.name ?? null,
-                image: ship?.image ?? null,
-                year: ship?.year_built ?? null,
-              },
-              cardPreviewComponent: ShipCardPreviewComponent,
-            };
-          }
-        ),
+        list: mappedList,
         length: data.shipsResult.result.totalCount,
       };
     }
@@ -73,7 +71,8 @@ export class ShipsGraphQLAPIService implements IAPI<ShipCardPreviewData, ShipCar
       const ship = data.ship;
 
       return {
-        id: ship.id ?? null,
+        // tslint:disable-next-line: no-non-null-assertion
+        id: ship.id!,
         name: ship.name ?? null,
         image: ship.image ?? null,
         year: ship.year_built ?? null,

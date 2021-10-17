@@ -1,11 +1,11 @@
 export interface HistoryCardPreviewData {
-  id: string | null;
+  id: string;
   title: string | null;
   date: Date | null;
 }
 
 export interface HistoryCardData {
-  id: string | null;
+  id: string;
   title: string | null;
   date: Date | null;
   details: string | null;

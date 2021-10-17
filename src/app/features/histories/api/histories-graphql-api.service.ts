@@ -21,17 +21,10 @@ export class HistoriesGraphQLAPIService implements IAPI<HistoryCardPreviewData, 
     list: [],
     length: 0,
   });
-  private _list$ = this.listSubject$.asObservable();
   private cardSubject$ = new BehaviorSubject<HistoryCardData | null>(null);
-  private _card$ = this.cardSubject$.asObservable();
 
-  get list$(): Observable<CardList<HistoryCardPreviewData>> {
-    return this._list$;
-  }
-
-  get card$(): Observable<HistoryCardData | null> {
-    return this._card$;
-  }
+  readonly list$ = this.listSubject$.asObservable();
+  readonly card$ = this.cardSubject$.asObservable();
 
   constructor(private readonly historiesGQL: HistoriesGQL, private readonly historyGQL: HistoryGQL) {}
 
@@ -44,19 +37,24 @@ export class HistoriesGraphQLAPIService implements IAPI<HistoryCardPreviewData, 
 
   private mapHistoriesQuery({ data }: { data: HistoriesQuery }): CardList<HistoryCardPreviewData> {
     if (data.historiesResult && data.historiesResult.data && data.historiesResult.result?.totalCount) {
+      const mappedList: Card<HistoryCardPreviewData>[] = [];
+
+      data.historiesResult.data.forEach((history) => {
+        if (history) {
+          mappedList.push({
+            data: {
+              // tslint:disable-next-line: no-non-null-assertion
+              id: history.id!,
+              title: history.title ?? null,
+              date: history.event_date_utc ? new Date(history.event_date_utc) : null,
+            },
+            cardPreviewComponent: HistoryCardPreviewComponent,
+          });
+        }
+      });
+
       return {
-        list: data.historiesResult.data.map(
-          (history): Card<HistoryCardPreviewData> => {
-            return {
-              data: {
-                id: history?.id ?? null,
-                title: history?.title ?? null,
-                date: history?.event_date_utc ? new Date(history.event_date_utc) : null,
-              },
-              cardPreviewComponent: HistoryCardPreviewComponent,
-            };
-          }
-        ),
+        list: mappedList,
         length: data.historiesResult.result.totalCount,
       };
     }
@@ -68,23 +66,24 @@ export class HistoriesGraphQLAPIService implements IAPI<HistoryCardPreviewData, 
   }
 
   private mapHistoryQuery({ data }: { data: HistoryQuery }): HistoryCardData | null {
-    if (data.history) {
-      const history = data.history;
-
-      return {
-        id: history.id ?? null,
-        title: history.title ?? null,
-        date: history.event_date_utc ? new Date(history.event_date_utc) : null,
-        details: history.details ?? null,
-        ships: history?.flight?.ships
-          ? history.flight.ships.map((ship) => {
-              return { id: ship?.id ?? null, name: ship?.name ?? null };
-            })
-          : [],
-      };
+    if (!data.history) {
+      return null;
     }
 
-    return null;
+    const history = data.history;
+
+    return {
+      // tslint:disable-next-line: no-non-null-assertion
+      id: history.id!,
+      title: history.title ?? null,
+      date: history.event_date_utc ? new Date(history.event_date_utc) : null,
+      details: history.details ?? null,
+      ships: history?.flight?.ships
+        ? history.flight.ships.map((ship) => {
+            return { id: ship?.id ?? null, name: ship?.name ?? null };
+          })
+        : [],
+    };
   }
 
   requestList(settings: ListSettings): void {

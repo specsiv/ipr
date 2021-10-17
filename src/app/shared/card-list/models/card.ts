@@ -1,19 +1,19 @@
 import { Type } from '@angular/core';
 
 export interface BaseCardData {
-  id: string | null;
+  id: string;
 }
 
-export interface ICardPreviewComponent<T extends BaseCardData = { id: string | null }> {
+export interface ICardPreviewComponent<T extends BaseCardData = { id: string }> {
   data: T;
 }
 
-export interface Card<T extends BaseCardData = { id: string | null }> {
+export interface Card<T extends BaseCardData = { id: string }> {
   data: T;
   cardPreviewComponent: Type<ICardPreviewComponent<T>>;
 }
 
-export interface CardList<T extends BaseCardData = { id: string | null }> {
+export interface CardList<T extends BaseCardData = { id: string }> {
   list: Card<T>[];
   length: number;
 }

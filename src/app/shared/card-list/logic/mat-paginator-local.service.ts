@@ -4,6 +4,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 @Injectable()
 export class MatPaginatorLocal extends MatPaginatorIntl {
   itemsPerPageLabel = 'Количество карточек на странице:';
+  nextPageLabel = 'Следующая страница';
+  previousPageLabel = 'Предыдущая страница';
 
   constructor() {
     super();
