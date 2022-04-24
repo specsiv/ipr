@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { CardListService } from 'src/app/core/modules/card-list-wrapper/logic/card-list.service';
+import { CardListLogic } from 'src/app/core/modules/card-list-wrapper/logic/card-list';
 import { IAPI, API_TOKEN, IList } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ShipCardData, ShipCardPreviewData } from '../models/ship-card';
@@ -10,7 +10,7 @@ import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { SaveSettings } from '../store/ships.actions';
 
 @Injectable()
-export class ShipsListService extends CardListService implements IList<ShipCardPreviewData>, OnDestroy {
+export class ShipsListService extends CardListLogic implements IList<ShipCardPreviewData>, OnDestroy {
   get list$(): Observable<CardList<ShipCardPreviewData>> {
     return this.shipsAPI.list$;
   }

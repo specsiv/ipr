@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HistoryCardPreviewComponent } from './components/history-card-preview/history-card-preview.component';
 import { HistoriesState } from './store/histories.state';
 import { API_TOKEN, CARD_TOKEN, LIST_TOKEN } from 'src/app/core/modules/card-list-wrapper/models/api';
-import { HistoriesGraphQLAPIService } from './api/histories-graphql-api.service';
+import { HistoriesGraphQLAPIService } from './adapters/histories-graphql-adapter.service';
 import { HistoryCardsService } from './logic/history-cards.service';
 import { HistoryComponent } from './components/history/history.component';
 import { HistoriesListService } from './logic/histories-list.service';

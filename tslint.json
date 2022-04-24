@@ -1,8 +1,7 @@
 {
-  "extends": ["tslint:recommended", "tslint-config-prettier", "tslint-plugin-prettier"],
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rulesDirectory": ["codelyzer"],
   "rules": {
-    "prettier": true,
     "adjacent-overload-signatures": false,
     "align": {
       "options": ["parameters", "statements"]

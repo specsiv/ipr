@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ShipCardPreviewComponent } from './components/ship-card-preview/ship-card-preview.component';
 import { ShipComponent } from './components/ship/ship.component';
 import { API_TOKEN, CARD_TOKEN, LIST_TOKEN } from 'src/app/core/modules/card-list-wrapper/models/api';
-import { ShipsGraphQLAPIService } from './api/ships-graphql-api.service';
+import { ShipsGraphQLAPIService } from './adapters/ships-graphql-adapter.service';
 import { ShipsListService } from './logic/ships-list.service';
 import { ShipCardsService } from './logic/ship-cards.service';
 

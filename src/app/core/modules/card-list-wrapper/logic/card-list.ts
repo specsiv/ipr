@@ -2,7 +2,7 @@ import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ListSettings, SortType } from '../../../../shared/card-list/models/list-settings';
 
-export abstract class CardListService {
+export abstract class CardListLogic {
   private isStarted = false;
   private destroy$ = new ReplaySubject<void>(1);
 
