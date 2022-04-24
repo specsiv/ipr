@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { DEFAULT_PAGE_OPTIONS } from 'src/app/core/card-list-wrapper/consts/defaults';
+import { DEFAULT_PAGE_OPTIONS } from 'src/app/core/modules/card-list-wrapper/consts/defaults';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
 import { SaveSettings } from './ships.actions';
 

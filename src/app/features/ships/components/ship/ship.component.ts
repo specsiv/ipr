@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CARD_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
+import { CARD_TOKEN, ICard } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { ShipCardData } from '../../models/ship-card';
 
 @Component({

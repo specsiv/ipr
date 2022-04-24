@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ShipCardData, ShipCardPreviewData } from 'src/app/features/ships/models/ship-card';
-import { IAPI, API_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI, API_TOKEN, ICard } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { Observable } from 'rxjs';
 
 @Injectable()

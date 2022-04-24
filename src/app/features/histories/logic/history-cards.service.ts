@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { IAPI, API_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI, API_TOKEN, ICard } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { Observable } from 'rxjs';
 import { HistoryCardData, HistoryCardPreviewData } from '../models/history-card';
 

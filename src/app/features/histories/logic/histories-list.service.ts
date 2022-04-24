@@ -1,10 +1,10 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { IAPI, API_TOKEN, ICard } from 'src/app/core/card-list-wrapper/models/api';
+import { IAPI, API_TOKEN, ICard } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ListSettings } from 'src/app/shared/card-list/models/list-settings';
-import { CardListService } from 'src/app/core/card-list-wrapper/logic/card-list.service';
+import { CardListService } from 'src/app/core/modules/card-list-wrapper/logic/card-list.service';
 import { Observable } from 'rxjs';
-import { IList } from 'src/app/core/card-list-wrapper/models/api';
+import { IList } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { Store } from '@ngxs/store';
 import { SaveSettings } from '../store/histories.actions';
 import { HistoriesState } from '../store/histories.state';

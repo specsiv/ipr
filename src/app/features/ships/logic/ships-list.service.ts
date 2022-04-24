@@ -1,8 +1,8 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { CardListService } from 'src/app/core/card-list-wrapper/logic/card-list.service';
-import { IAPI, API_TOKEN, IList } from 'src/app/core/card-list-wrapper/models/api';
+import { CardListService } from 'src/app/core/modules/card-list-wrapper/logic/card-list.service';
+import { IAPI, API_TOKEN, IList } from 'src/app/core/modules/card-list-wrapper/models/api';
 import { CardList } from 'src/app/shared/card-list/models/card';
 import { ShipCardData, ShipCardPreviewData } from '../models/ship-card';
 import { ShipsState } from '../store/ships.state';

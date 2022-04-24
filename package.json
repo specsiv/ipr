@@ -1,6 +1,6 @@
 {
   "name": "ipr",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -76,7 +76,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run lint"
+      "pre-commit": "npm run lint && lint-staged"
     }
   },
   "lint-staged": {

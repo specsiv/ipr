@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { Card, CardList } from '../../models/card';
 import { Observable, ReplaySubject } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { SortType } from '../../models/list-settings';
 import { filterPageSize } from '../../utils/page-utils';
-import { takeUntil } from 'rxjs/operators';
 
 const DEFAULT_PAGE_SIZE = 5;
 const DEFAULT_PAGE_OPTIONS = [5, 25, 100];
